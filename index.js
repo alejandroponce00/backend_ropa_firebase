@@ -5,14 +5,25 @@ const cors = require("cors");
 const fs = require('fs');
 
 // Inicializar Firebase
-const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_KEY_PATH, 'utf8'));
+import admin from "firebase-admin";
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    privateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    clientId: process.env.FIREBASE_CLIENT_ID
+  })
+});
+
+const db = admin.firestore();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// Firestore
-const db = admin.firestore();
+
 
 const app = express();
 app.use(cors());
