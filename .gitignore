@@ -1,0 +1,7 @@
+/firebaseKey
+*firebaseKey
+/node_modules
+*node_modules
+/.env
+·env
+firebaseKey.json
